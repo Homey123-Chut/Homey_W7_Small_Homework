@@ -19,7 +19,7 @@ List<SingleChildWidget> get devProviders {
     // 1 - Inject the song repository
     Provider<SongRepository>(create: (_) => SongRepositoryMock()),
 
-    // 1 - Inject the user history repository
+    // XX - Inject the user history repository
     Provider<UserHistoryRepository>(create: (_) => historyRepository),
 
     // 2 - Inject the player state
