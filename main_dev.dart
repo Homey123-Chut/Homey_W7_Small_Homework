@@ -1,3 +1,5 @@
+import 'package:practice/W7_small_Homework/data/repositories/history/user_history_repository.dart';
+import 'package:practice/W7_small_Homework/data/repositories/history/user_history_repository_mock.dart';
 import 'package:provider/provider.dart';
 import 'package:nested/nested.dart';
  
@@ -11,10 +13,14 @@ import 'ui/states/settings_state.dart';
 /// Configure provider dependencies for dev environment
 List<SingleChildWidget> get devProviders {
   final appSettingsRepository = AppSettingsRepositoryMock();
+  final historyRepository = UserHistoryRepositoryMock(); 
 
   return [
     // 1 - Inject the song repository
     Provider<SongRepository>(create: (_) => SongRepositoryMock()),
+
+    // 1 - Inject the user history repository
+    Provider<UserHistoryRepository>(create: (_) => historyRepository),
 
     // 2 - Inject the player state
     ChangeNotifierProvider<PlayerState>(create: (_) => PlayerState()),
