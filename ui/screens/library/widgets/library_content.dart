@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:practice/W7_small_Homework/data/repositories/songs/song_repository.dart';
 import 'package:practice/W7_small_Homework/model/songs/song.dart';
-import 'package:practice/W7_small_Homework/ui/states/player_state.dart';
-import 'package:practice/W7_small_Homework/ui/states/settings_state.dart';
+import 'package:practice/W7_small_Homework/ui/screens/library/view_model/library_view_model.dart';
 import 'package:practice/W7_small_Homework/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -13,14 +11,12 @@ class LibraryContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Read the settings state
-    final settingsState = context.read<AppSettingsState>();
-    // Watch the player state
-    final playerState = context.watch<PlayerState>();
-    // Read the song repository
-    final songs = context.read<SongRepository>().fetchSongs();
+
+    final viewModel = context.watch<LibraryViewModel>();
+    final settings = viewModel.settingsState;
+
     return Container(
-       color: settingsState.theme.backgroundColor,
+       color: settings.theme.backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -31,12 +27,12 @@ class LibraryContent extends StatelessWidget {
 
           Expanded(
             child: ListView.builder(
-              itemCount: songs.length,
+              itemCount: viewModel.songs.length,
               itemBuilder: (context, index) => SongTile(
-                song: songs[index],
-                isPlaying: playerState.currentSong == songs[index],
+                song: viewModel.songs[index],
+                isPlaying: viewModel.isPlaying(viewModel.songs[index]),
                 onTap: () {
-                  playerState.start(songs[index]);
+                  viewModel.playSong(viewModel.songs[index]);
                 },
               ),
             ),
